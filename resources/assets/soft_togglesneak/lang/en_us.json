@@ -1,0 +1,22 @@
+{
+  "key.enable_toggle_sneak": "Soft-ToggleSneak",
+
+  "text.soft_toggle_sneak.disable": "Disabled ToggleSneak",
+  "text.soft_toggle_sneak.enable": "Enabled ToggleSneak",
+
+  "text.autoconfig.soft_toggle_sneak.title": "Soft Toggle Sneak configurations",
+  "text.autoconfig.soft_toggle_sneak.option.isActivated": "Enabled",
+  "text.autoconfig.soft_toggle_sneak.option.minTicks": "Minimum Ticks",
+  "text.autoconfig.soft_toggle_sneak.option.maxTicks": "Maximum Ticks",
+
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour": "Unsneaking Behaviour",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakInLava": "Unsneak when falling into Lava",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakInWater": "Unsneak when falling into Water",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakWhenFlying": "Unsneak when going into Creative Flight",
+
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour": "Sneaking Behaviour",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenFlying": "Allow ToggleSneak when Flying",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenInWater": "Allow ToggleSneak when in Water",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenInLava": "Allow ToggleSneak when in Lava",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenGettingOfHorse": "Allow ToggleSneak when leaving Vehicle"
+}
