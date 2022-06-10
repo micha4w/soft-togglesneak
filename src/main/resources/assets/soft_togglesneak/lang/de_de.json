@@ -1,0 +1,22 @@
+{
+  "key.enable_toggle_sneak": "Soft-ToggleSneak",
+
+  "text.soft_toggle_sneak.disable": "ToggleSneak abschalten",
+  "text.soft_toggle_sneak.enable": "ToggleSneak anstellen",
+
+  "text.autoconfig.soft_toggle_sneak.title": "Soft Toggle Sneak einstellungen",
+  "text.autoconfig.soft_toggle_sneak.option.isActivated": "Angestellt",
+  "text.autoconfig.soft_toggle_sneak.option.minTicks": "Mindest Ticks",
+  "text.autoconfig.soft_toggle_sneak.option.maxTicks": "Höchst Ticks",
+
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour": "Schleich-Aufhörverhalten",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakInLava": "Aufhören zu schleichen wenn man in Lava ist",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakInWater": "Aufhören zu schleichen wenn man in Wasser ist",
+  "text.autoconfig.soft_toggle_sneak.option.unsneak_behaviour.unsneakWhenFlying": "Aufhören zu schleichen wenn man in Kreativ fliegt",
+
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour": "Schleichverhalten",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenFlying": "Schleich umschalten erlauben wenn man fliegt",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenInWater": "Schleich umschalten erlauben wenn man in Wasser ist",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenInLava": "Schleich umschalten erlauben wenn man in Lava ist",
+  "text.autoconfig.soft_toggle_sneak.option.togglesneak_behaviour.sneakWhenGettingOfHorse": "Schleich umschalten erlauben wenn man ein Fahrzeug verlässt"
+}
