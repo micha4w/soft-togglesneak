@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableTextContent;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -73,10 +74,10 @@ public class ToggleSneakCustomConfig implements ToggleSneakConfig {
         save();
 
         if ( isActivated ) {
-            client.player.sendMessage(new TranslatableText("text.soft_toggle_sneak.enable"), true);
+            client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.enable"), true);
         } else {
             ToggleSneakClient.isSneaking = false;
-            client.player.sendMessage(new TranslatableText("text.soft_toggle_sneak.disable"), true);
+            client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.disable"), true);
         }
     }
 
