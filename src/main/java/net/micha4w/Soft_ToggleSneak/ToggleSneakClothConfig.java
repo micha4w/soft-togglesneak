@@ -54,17 +54,17 @@ public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
     }
 
     @Override
-    public boolean getUnseakInLava() {
+    public boolean getUnsneakInLava() {
         return unsneak_behaviour.unsneakInLava;
     }
 
     @Override
-    public boolean getUnseakInWater() {
+    public boolean getUnsneakInWater() {
         return unsneak_behaviour.unsneakInWater;
     }
 
     @Override
-    public boolean getUnseakWhenFlying() {
+    public boolean getUnsneakWhenFlying() {
         return unsneak_behaviour.unsneakWhenFlying;
     }
 

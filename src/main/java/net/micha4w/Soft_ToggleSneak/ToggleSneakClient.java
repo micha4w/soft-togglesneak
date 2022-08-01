@@ -14,7 +14,6 @@ public class ToggleSneakClient implements ClientModInitializer {
 
     private static KeyBinding sneakKeyBind;
     private static KeyBinding toggleKeyBind;
-    private static boolean enableWasPressed = false;
     public static ToggleSneakConfig config;
 
     public static void initKeyBind(KeyBinding keyBind) {
@@ -64,11 +63,9 @@ public class ToggleSneakClient implements ClientModInitializer {
 
     private static void endTick (MinecraftClient client) {
 
-        boolean enableIsPressed = toggleKeyBind.isPressed();
-        if ( enableIsPressed && !enableWasPressed ) {
+        if ( toggleKeyBind.wasPressed() ) {
             config.onPress(client);
         }
-        enableWasPressed = enableIsPressed;
 
         boolean isActivated = isActivated();
 
@@ -84,9 +81,9 @@ public class ToggleSneakClient implements ClientModInitializer {
 
 
                 if ( !isPressed && (
-                    ( config.getUnseakInWater() && client.player.isInsideWaterOrBubbleColumn() && !inWaterWhenClick ) ||
-                    ( config.getSneakWhenInLava() && client.player.isInLava() && !inLavaWhenClick) ||
-                    ( config.getUnseakWhenFlying() && client.player.getAbilities().flying && !flyWhenClick ) )
+                    ( config.getUnsneakInWater() && client.player.isInsideWaterOrBubbleColumn() && !inWaterWhenClick ) ||
+                    ( config.getUnsneakInLava() && client.player.isInLava() && !inLavaWhenClick) ||
+                    ( config.getUnsneakWhenFlying() && client.player.getAbilities().flying && !flyWhenClick ) )
                 ) {
                     isSneaking = false;
                 }

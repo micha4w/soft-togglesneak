@@ -11,9 +11,9 @@ public interface ToggleSneakConfig {
     long getMinTicks();
     long getMaxTicks();
 
-    boolean getUnseakInLava();
-    boolean getUnseakInWater();
-    boolean getUnseakWhenFlying();
+    boolean getUnsneakInLava();
+    boolean getUnsneakInWater();
+    boolean getUnsneakWhenFlying();
 
     boolean getSneakWhenInLava();
     boolean getSneakWhenInWater();
