@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+license="MIT"
+
+[[mods]]
+modId="soft_togglesneak"
+version="1.1.3"
+displayName="Soft ToggleSneak"
+logoFile="icon512.png"
+authors="micha4w"
+description='''
+Simple mod that allows you to Toggle Sneak if you click shift for a specific duration.
+'''
+
+[[dependencies.examplemod]]
+    modId="cloth-config"
+    mandatory=false
+    versionRange="[8.2.88,)"
+    side="CLIENT"

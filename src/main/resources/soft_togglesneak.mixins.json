@@ -6,9 +6,11 @@
   "mixins": [
   ],
   "client": [
-    "KeyBindingMixin"
+    "KeyMappingMixin",
+    "ToggleKeyMappingMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "refmap": "mixins.soft_togglesneak.refmap.json"
 }

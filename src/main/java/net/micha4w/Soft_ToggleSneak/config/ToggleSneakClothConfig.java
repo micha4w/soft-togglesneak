@@ -1,13 +1,12 @@
 package net.micha4w.Soft_ToggleSneak.config;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 
 @Config(name = "soft_toggle_sneak")
 public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
@@ -33,9 +32,8 @@ public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
     }
 
     @Override
-    public void onPress(MinecraftClient client) {
-        Screen screen = AutoConfig.getConfigScreen(ToggleSneakClothConfig.class, client.currentScreen).get();
-        client.setScreen(screen);
+    public void onPress(Minecraft client) {
+        client.setScreen(getScreen(client, client.screen));
     }
 
 
@@ -90,7 +88,7 @@ public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
     }
 
     @Override
-    public ConfigScreenFactory<?> getScreen() {
-        return parent -> AutoConfig.getConfigScreen(ToggleSneakClothConfig.class, parent).get();
+    public Screen getScreen(Minecraft client, Screen parent) {
+        return AutoConfig.getConfigScreen(ToggleSneakClothConfig.class, parent).get();
     }
 }

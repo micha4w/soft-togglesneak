@@ -2,11 +2,10 @@ package net.micha4w.Soft_ToggleSneak.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
 import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +22,7 @@ public class ToggleSneakCustomConfig implements IToggleSneakConfig {
     long maxTicks = 5;
 
     UnsneakBehaviour unsneak_behaviour = new UnsneakBehaviour();
+
     static class UnsneakBehaviour {
         boolean unsneakInLava = false;
         boolean unsneakInWater = true;
@@ -65,21 +65,21 @@ public class ToggleSneakCustomConfig implements IToggleSneakConfig {
 
 
     @Override
-    public void onPress(MinecraftClient client) {
-        ToggleSneakClient.config = ToggleSneakCustomConfig.loadOrCreate();
-        ((ToggleSneakCustomConfig) ToggleSneakClient.config).saveConfig(client, !isActivated);
+    public void onPress(Minecraft client) {
+        ch.micha4w.Soft_ToggleSneak.ToggleSneakClient.config = ToggleSneakCustomConfig.loadOrCreate();
+        ((ToggleSneakCustomConfig) ch.micha4w.Soft_ToggleSneak.ToggleSneakClient.config).saveConfig(client, !isActivated);
     }
 
-    public void saveConfig(MinecraftClient client, boolean willBeActivated) {
+    public void saveConfig(Minecraft client, boolean willBeActivated) {
         isActivated = willBeActivated;
         save();
 
         if ( client.player != null ) {
-            if (isActivated) {
-                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.enable"), true);
+            if ( isActivated ) {
+                client.player.displayClientMessage(Component.translatable("text.soft_toggle_sneak.enable"), true);
             } else {
-                ToggleSneakClient.isSneaking = false;
-                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.disable"), true);
+                ch.micha4w.Soft_ToggleSneak.ToggleSneakClient.isSneaking = false;
+                client.player.displayClientMessage(Component.translatable("text.soft_toggle_sneak.disable"), true);
             }
         }
     }
@@ -135,7 +135,7 @@ public class ToggleSneakCustomConfig implements IToggleSneakConfig {
     }
 
     @Override
-    public ConfigScreenFactory<?> getScreen() {
-        return parent -> null;
+    public Screen getScreen(Minecraft client, Screen parent) {
+        return null;
     }
 }
