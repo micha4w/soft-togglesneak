@@ -1,18 +1,19 @@
-package net.micha4w.Soft_ToggleSneak;
+package net.micha4w.Soft_ToggleSneak.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
+import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ToggleSneakCustomConfig implements ToggleSneakConfig {
+public class ToggleSneakCustomConfig implements IToggleSneakConfig {
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final String path = "config/soft_toggle_sneak.json";
@@ -73,11 +74,13 @@ public class ToggleSneakCustomConfig implements ToggleSneakConfig {
         isActivated = willBeActivated;
         save();
 
-        if ( isActivated ) {
-            client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.enable"), true);
-        } else {
-            ToggleSneakClient.isSneaking = false;
-            client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.disable"), true);
+        if ( client.player != null ) {
+            if (isActivated) {
+                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.enable"), true);
+            } else {
+                ToggleSneakClient.isSneaking = false;
+                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.disable"), true);
+            }
         }
     }
 

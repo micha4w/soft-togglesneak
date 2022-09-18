@@ -11,7 +11,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [ "net.micha4w.Soft_ToggleSneak.ToggleSneakClient" ],
-    "modmenu": [ "net.micha4w.Soft_ToggleSneak.ToggleSneakModMenu" ]
+    "modmenu": [ "net.micha4w.Soft_ToggleSneak.config.ToggleSneakModMenu" ]
   },
   "mixins": [
     "soft_togglesneak.mixins.json"
@@ -19,7 +19,7 @@
   "depends": {
     "fabricloader": ">=0.12.12",
     "fabric": "*",
-    "minecraft": ">=1.18"
+    "minecraft": ">=1.19"
   },
 
   "suggests": {

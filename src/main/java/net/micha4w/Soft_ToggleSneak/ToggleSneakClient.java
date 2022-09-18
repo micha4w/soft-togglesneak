@@ -5,6 +5,10 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.micha4w.Soft_ToggleSneak.config.ToggleSneakClothConfig;
+import net.micha4w.Soft_ToggleSneak.config.ToggleSneakCustomConfig;
+import net.micha4w.Soft_ToggleSneak.iface.IKeybinding;
+import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -12,13 +16,8 @@ import org.lwjgl.glfw.GLFW;
 
 public class ToggleSneakClient implements ClientModInitializer {
 
-    private static KeyBinding sneakKeyBind;
     private static KeyBinding toggleKeyBind;
-    public static ToggleSneakConfig config;
-
-    public static void initKeyBind(KeyBinding keyBind) {
-        sneakKeyBind = keyBind;
-    }
+    public static IToggleSneakConfig config;
 
     public static void innitConfig() {
         try {
@@ -30,7 +29,6 @@ public class ToggleSneakClient implements ClientModInitializer {
         }
     }
 
-
     @Override
     public void onInitializeClient() {
         if ( config == null ) {
@@ -38,11 +36,11 @@ public class ToggleSneakClient implements ClientModInitializer {
         }
 
         toggleKeyBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                    "key.enable_toggle_sneak",
-                    InputUtil.Type.KEYSYM,
-                    GLFW.GLFW_KEY_RIGHT_SHIFT,
-                    KeyBinding.MOVEMENT_CATEGORY
-                ));
+            "key.enable_toggle_sneak",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_RIGHT_SHIFT,
+            KeyBinding.MOVEMENT_CATEGORY
+        ));
 
         ClientTickEvents.END_CLIENT_TICK.register(ToggleSneakClient::endTick);
     }
@@ -73,7 +71,7 @@ public class ToggleSneakClient implements ClientModInitializer {
 
             if (client.player != null && client.world != null) {
 
-                boolean isPressed = ((IKeybinding) sneakKeyBind).isPressed(true);
+                boolean isPressed = ((IKeybinding) client.options.sneakKey).isPressed(true);
 
                 if ( flyWhenClick && !client.player.getAbilities().flying ) flyWhenClick = false;
                 if ( inLavaWhenClick && !client.player.isInLava() ) inLavaWhenClick = false;
@@ -108,19 +106,16 @@ public class ToggleSneakClient implements ClientModInitializer {
                         } else {
                             clickTick = client.world.getTime();
                         }
-//                    client.player.sendMessage(new LiteralText("Start Sneaking"), false);
                     }
                 } else if ( wasPressed && !isPressed ) {
                     if (willUnsneak) {
                         isSneaking = false;
                         willUnsneak = false;
-//                    client.player.sendMessage(new LiteralText("Stopped ToggleSneak"), false);
                     } else {
                         long deltaClick = client.world.getTime() - clickTick;
 
                         if ( deltaClick < config.getMinTicks() || deltaClick > config.getMaxTicks()) {
                             isSneaking = false;
-    //                    client.player.sendMessage(new LiteralText("Stopped Sneaking"), false);
                         }
                     }
                 }

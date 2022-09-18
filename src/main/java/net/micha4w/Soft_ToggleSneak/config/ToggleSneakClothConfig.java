@@ -1,15 +1,16 @@
-package net.micha4w.Soft_ToggleSneak;
+package net.micha4w.Soft_ToggleSneak.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 
 @Config(name = "soft_toggle_sneak")
-public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
+public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
     public boolean isActivated = true;
     long minTicks = 0;
     long maxTicks = 5;
