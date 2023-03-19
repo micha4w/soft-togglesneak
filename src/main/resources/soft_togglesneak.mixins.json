@@ -4,6 +4,7 @@
   "package": "net.micha4w.Soft_ToggleSneak.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ClientConnectionMixin"
   ],
   "client": [
     "KeyBindingMixin"

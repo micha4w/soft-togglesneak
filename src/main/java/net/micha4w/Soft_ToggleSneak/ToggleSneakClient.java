@@ -12,12 +12,18 @@ import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.glfw.GLFW;
 
 public class ToggleSneakClient implements ClientModInitializer {
 
     private static KeyBinding toggleKeyBind;
     public static IToggleSneakConfig config;
+
+    private static KeyBinding noMoveKeyBind;
+    private static boolean noMoving;
+    private static Vec3d lastPosition;
 
     public static void innitConfig() {
         try {
@@ -27,6 +33,10 @@ public class ToggleSneakClient implements ClientModInitializer {
         } catch (NoClassDefFoundError e) {
             config = ToggleSneakCustomConfig.loadOrCreate();
         }
+    }
+
+    public static boolean isNoMoveActivated() {
+        return noMoving;
     }
 
     @Override
@@ -40,6 +50,13 @@ public class ToggleSneakClient implements ClientModInitializer {
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_RIGHT_SHIFT,
             KeyBinding.MOVEMENT_CATEGORY
+        ));
+
+        noMoveKeyBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.no_moving",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_B,
+                KeyBinding.MOVEMENT_CATEGORY
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(ToggleSneakClient::endTick);
@@ -60,6 +77,17 @@ public class ToggleSneakClient implements ClientModInitializer {
     }
 
     private static void endTick (MinecraftClient client) {
+
+        if (noMoveKeyBind.wasPressed())
+        {
+            noMoving = !noMoving;
+            if (noMoving) {
+                lastPosition = client.player.getPos();
+            } else {
+                client.player.setPosition(lastPosition);
+            }
+            client.player.sendMessage(Text.of("NoMoving: " + noMoving));
+        }
 
         if ( toggleKeyBind.wasPressed() ) {
             config.onPress(client);
