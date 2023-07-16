@@ -40,7 +40,6 @@ def update(minecraft_version, loader, mod_version):
     ''')[1:]
 
     if loader.lower() == 'fabric':
-        print(loader.lower())
         gradle_properties += tw.dedent(f'''
             # Fabric Properties
             yarn_mappings={dependencies['Yarn']}
