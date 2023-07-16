@@ -19,3 +19,5 @@ python3 updater.py 1.20.1
 ./gradlew build
 ./gradlew runClient # to test
 ```
+
+The new jars should appear in build/libs/.
