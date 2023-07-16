@@ -6,3 +6,19 @@ Original idea by: [Zebra's ToggleSneak](https://shotbow.net/forum/threads/zebras
 
 ## Curseforge
 Available [here](https://www.curseforge.com/minecraft/mc-mods/soft-togglesneak).
+
+## Manual update
+Incase you have some free time and the mod isn't on the newest Minecraft Version you can try updating it yourself.
+All you need is JDK 17 and Python3 with click and requests.
+
+Then run these in a terminal:
+```shell
+git clone https://github.com/micha4w/soft-togglesneak
+git checkout 1.19_Forge
+cd soft-togglesneak
+python3 updater.py 1.20.1
+./gradlew build
+./gradlew runClient # to test
+```
+
+The new jars should appear in build/libs/.
