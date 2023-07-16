@@ -3,12 +3,6 @@ import re
 import textwrap as tw
 import click
 
-loader = 'forge'
-minecraft_version = '1.20.0'
-mod_version = '1.1.3'
-
-import click
-
 @click.command()
 @click.argument('minecraft-version')
 @click.option('--loader', default='fabric', help='The Mod Loader to use [fabric, forge]')
@@ -39,8 +33,8 @@ def update(minecraft_version, loader, mod_version):
 
         # Mod Properties
         mod_version={mod_version}
-        maven_group=net.micha4w
-        archives_base_name=Soft_ToggleSneak
+        mod_group_id=net.micha4w
+        mod_id=Soft_ToggleSneak
 
         minecraft_version={minecraft_version}
     ''')[1:]
@@ -63,7 +57,6 @@ def update(minecraft_version, loader, mod_version):
 
         gradle_properties += tw.dedent(f'''
             # Forge Properties
-            minecraft_version={minecraft_version}
             forge_version={dependencies['Forge']}
 
             # Dependencies
