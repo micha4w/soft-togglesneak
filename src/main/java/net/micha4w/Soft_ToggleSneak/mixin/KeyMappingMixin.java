@@ -2,35 +2,34 @@ package net.micha4w.Soft_ToggleSneak.mixin;
 
 import net.micha4w.Soft_ToggleSneak.iface.IKeybinding;
 import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(KeyBinding.class)
-public abstract class KeyBindingMixin implements IKeybinding {
+@Mixin(KeyMapping.class)
+public abstract class KeyMappingMixin implements IKeybinding {
 
     @Shadow
-    private boolean pressed;
+    private boolean isDown;
 
     @Shadow
-    public abstract boolean isPressed ();
+    public abstract boolean isDown();
 
     public boolean isPressed (boolean actualValue) {
         if (actualValue) {
-            return pressed;
+            return isDown;
         } else {
-            return this.isPressed();
+            return this.isDown();
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "isPressed()Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "isDown()Z", cancellable = true)
     public void onIsPressed(CallbackInfoReturnable<Boolean> info) {
-        if ( ToggleSneakClient.isActivated() && (Object) this == MinecraftClient.getInstance().options.sneakKey ) {
+        if ( ToggleSneakClient.isActivated() && (Object) this == Minecraft.getInstance().options.keyShift) {
             info.setReturnValue(ToggleSneakClient.isSneaking);
         }
     }

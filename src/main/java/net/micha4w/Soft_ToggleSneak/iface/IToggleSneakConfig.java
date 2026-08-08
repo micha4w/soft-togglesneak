@@ -1,11 +1,11 @@
 package net.micha4w.Soft_ToggleSneak.iface;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public interface IToggleSneakConfig {
 
-    void onPress(MinecraftClient client);
+    void onPress(Minecraft client);
 
     boolean getActivated();
     long getMinTicks();

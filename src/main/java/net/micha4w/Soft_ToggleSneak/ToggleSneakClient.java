@@ -1,22 +1,23 @@
 package net.micha4w.Soft_ToggleSneak;
 
+
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.micha4w.Soft_ToggleSneak.config.ToggleSneakClothConfig;
 import net.micha4w.Soft_ToggleSneak.config.ToggleSneakCustomConfig;
 import net.micha4w.Soft_ToggleSneak.iface.IKeybinding;
 import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
 import org.lwjgl.glfw.GLFW;
 
 public class ToggleSneakClient implements ClientModInitializer {
 
-    private static KeyBinding toggleKeyBind;
+    private static KeyMapping toggleKeyBind;
     public static IToggleSneakConfig config;
 
     public static void innitConfig() {
@@ -35,11 +36,11 @@ public class ToggleSneakClient implements ClientModInitializer {
             innitConfig();
         }
 
-        toggleKeyBind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        toggleKeyBind = KeyMappingHelper.registerKeyMapping(new KeyMapping(
             "key.enable_toggle_sneak",
-            InputUtil.Type.KEYSYM,
+            InputConstants.Type.KEYSYM,
             GLFW.GLFW_KEY_RIGHT_SHIFT,
-            KeyBinding.MOVEMENT_CATEGORY
+            KeyMapping.Category.MOVEMENT
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(ToggleSneakClient::endTick);
@@ -59,9 +60,9 @@ public class ToggleSneakClient implements ClientModInitializer {
         return config.getActivated();
     }
 
-    private static void endTick (MinecraftClient client) {
+    private static void endTick (Minecraft client) {
 
-        if ( toggleKeyBind.wasPressed() ) {
+        if ( toggleKeyBind.consumeClick() ) {
             config.onPress(client);
         }
 
@@ -69,17 +70,17 @@ public class ToggleSneakClient implements ClientModInitializer {
 
         if ( isActivated ) {
 
-            if (client.player != null && client.world != null) {
+            if (client.player != null && client.level != null) {
 
-                boolean isPressed = ((IKeybinding) client.options.sneakKey).isPressed(true);
+                boolean isPressed = ((IKeybinding) client.options.keyShift).isPressed(true);
 
                 if ( flyWhenClick && !client.player.getAbilities().flying ) flyWhenClick = false;
                 if ( inLavaWhenClick && !client.player.isInLava() ) inLavaWhenClick = false;
-                if ( inWaterWhenClick && !client.player.isInsideWaterOrBubbleColumn() ) inWaterWhenClick = false;
+                if ( inWaterWhenClick && !client.player.isInWater() ) inWaterWhenClick = false;
 
 
                 if ( !isPressed && (
-                    ( config.getUnsneakInWater() && client.player.isInsideWaterOrBubbleColumn() && !inWaterWhenClick ) ||
+                    ( config.getUnsneakInWater() && client.player.isInWater() && !inWaterWhenClick ) ||
                     ( config.getUnsneakInLava() && client.player.isInLava() && !inLavaWhenClick) ||
                     ( config.getUnsneakWhenFlying() && client.player.getAbilities().flying && !flyWhenClick ) )
                 ) {
@@ -93,18 +94,18 @@ public class ToggleSneakClient implements ClientModInitializer {
                         isSneaking = true;
 
                         flyWhenClick = client.player.getAbilities().flying;
-                        inWaterWhenClick = client.player.isInsideWaterOrBubbleColumn();
+                        inWaterWhenClick = client.player.isInWater();
                         inLavaWhenClick = client.player.isInLava();
 
                         if (
                             ( !config.getSneakWhenInWater() && inWaterWhenClick ) ||
                             ( !config.getSneakWhenInLava() && inLavaWhenClick ) ||
-                            ( !config.getSneakWhenGettingOfHorse() && client.player.hasVehicle() ) ||
+                            ( !config.getSneakWhenGettingOfHorse() && client.player.isPassenger() ) ||
                             ( !config.getSneakWhenFlying() && flyWhenClick )
                         ) {
                             willUnsneak = true;
                         } else {
-                            clickTick = client.world.getTime();
+                            clickTick = client.level.getGameTime();
                         }
                     }
                 } else if ( wasPressed && !isPressed ) {
@@ -112,7 +113,7 @@ public class ToggleSneakClient implements ClientModInitializer {
                         isSneaking = false;
                         willUnsneak = false;
                     } else {
-                        long deltaClick = client.world.getTime() - clickTick;
+                        long deltaClick = client.level.getGameTime() - clickTick;
 
                         if ( deltaClick < config.getMinTicks() || deltaClick > config.getMaxTicks()) {
                             isSneaking = false;

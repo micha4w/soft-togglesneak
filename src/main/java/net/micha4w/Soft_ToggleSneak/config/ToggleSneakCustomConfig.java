@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
 import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -65,21 +65,21 @@ public class ToggleSneakCustomConfig implements IToggleSneakConfig {
 
 
     @Override
-    public void onPress(MinecraftClient client) {
+    public void onPress(Minecraft client) {
         ToggleSneakClient.config = ToggleSneakCustomConfig.loadOrCreate();
         ((ToggleSneakCustomConfig) ToggleSneakClient.config).saveConfig(client, !isActivated);
     }
 
-    public void saveConfig(MinecraftClient client, boolean willBeActivated) {
+    public void saveConfig(Minecraft client, boolean willBeActivated) {
         isActivated = willBeActivated;
         save();
 
         if ( client.player != null ) {
             if (isActivated) {
-                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.enable"), true);
+                client.player.sendOverlayMessage(Component.translatable("text.soft_toggle_sneak.enable"));
             } else {
                 ToggleSneakClient.isSneaking = false;
-                client.player.sendMessage(Text.translatable("text.soft_toggle_sneak.disable"), true);
+                client.player.sendOverlayMessage(Component.translatable("text.soft_toggle_sneak.disable"));
             }
         }
     }
