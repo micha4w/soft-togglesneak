@@ -1,19 +1,19 @@
-package net.micha4w.Soft_ToggleSneak;
+package net.micha4w.Soft_ToggleSneak.iface;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
-public interface ToggleSneakConfig {
+public interface IToggleSneakConfig {
 
-    void onPress(MinecraftClient client);
+    void onPress(Minecraft client);
 
     boolean getActivated();
     long getMinTicks();
     long getMaxTicks();
 
-    boolean getUnseakInLava();
-    boolean getUnseakInWater();
-    boolean getUnseakWhenFlying();
+    boolean getUnsneakInLava();
+    boolean getUnsneakInWater();
+    boolean getUnsneakWhenFlying();
 
     boolean getSneakWhenInLava();
     boolean getSneakWhenInWater();

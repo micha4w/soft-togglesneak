@@ -1,21 +1,24 @@
-package net.micha4w.Soft_ToggleSneak;
+package net.micha4w.Soft_ToggleSneak.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.AutoConfigClient;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 
+@SuppressWarnings("CanBeFinal")
 @Config(name = "soft_toggle_sneak")
-public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
+public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
     public boolean isActivated = true;
     long minTicks = 0;
     long maxTicks = 5;
 
     @ConfigEntry.Gui.CollapsibleObject
     UnsneakBehaviour unsneak_behaviour = new UnsneakBehaviour();
+    @SuppressWarnings("CanBeFinal")
     static class UnsneakBehaviour {
         boolean unsneakInLava = false;
         boolean unsneakInWater = true;
@@ -24,6 +27,7 @@ public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
 
     @ConfigEntry.Gui.CollapsibleObject
     ToggleSneakBehaviour togglesneak_behaviour = new ToggleSneakBehaviour();
+    @SuppressWarnings("CanBeFinal")
     static class ToggleSneakBehaviour {
         boolean sneakWhenInLava = true;
         boolean sneakWhenInWater = false;
@@ -32,9 +36,9 @@ public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
     }
 
     @Override
-    public void onPress(MinecraftClient client) {
-        Screen screen = AutoConfig.getConfigScreen(ToggleSneakClothConfig.class, client.currentScreen).get();
-        client.setScreen(screen);
+    public void onPress(Minecraft client) {
+        Screen screen = AutoConfigClient.getConfigScreen(ToggleSneakClothConfig.class, client.gui.screen()).get();
+		client.setScreenAndShow(screen);
     }
 
 
@@ -54,17 +58,17 @@ public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
     }
 
     @Override
-    public boolean getUnseakInLava() {
+    public boolean getUnsneakInLava() {
         return unsneak_behaviour.unsneakInLava;
     }
 
     @Override
-    public boolean getUnseakInWater() {
+    public boolean getUnsneakInWater() {
         return unsneak_behaviour.unsneakInWater;
     }
 
     @Override
-    public boolean getUnseakWhenFlying() {
+    public boolean getUnsneakWhenFlying() {
         return unsneak_behaviour.unsneakWhenFlying;
     }
 
@@ -90,6 +94,6 @@ public class ToggleSneakClothConfig implements ConfigData, ToggleSneakConfig {
 
     @Override
     public ConfigScreenFactory<?> getScreen() {
-        return parent -> AutoConfig.getConfigScreen(ToggleSneakClothConfig.class, parent).get();
+        return parent -> AutoConfigClient.getConfigScreen(ToggleSneakClothConfig.class, parent).get();
     }
 }

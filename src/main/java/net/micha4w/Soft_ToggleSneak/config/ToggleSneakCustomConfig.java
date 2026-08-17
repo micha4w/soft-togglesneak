@@ -1,17 +1,19 @@
-package net.micha4w.Soft_ToggleSneak;
+package net.micha4w.Soft_ToggleSneak.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.TranslatableText;
+import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
+import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ToggleSneakCustomConfig implements ToggleSneakConfig {
+public class ToggleSneakCustomConfig implements IToggleSneakConfig {
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final String path = "config/soft_toggle_sneak.json";
@@ -63,20 +65,22 @@ public class ToggleSneakCustomConfig implements ToggleSneakConfig {
 
 
     @Override
-    public void onPress(MinecraftClient client) {
+    public void onPress(Minecraft client) {
         ToggleSneakClient.config = ToggleSneakCustomConfig.loadOrCreate();
         ((ToggleSneakCustomConfig) ToggleSneakClient.config).saveConfig(client, !isActivated);
     }
 
-    public void saveConfig(MinecraftClient client, boolean willBeActivated) {
+    public void saveConfig(Minecraft client, boolean willBeActivated) {
         isActivated = willBeActivated;
         save();
 
-        if ( isActivated ) {
-            client.player.sendMessage(new TranslatableText("text.soft_toggle_sneak.enable"), true);
-        } else {
-            ToggleSneakClient.isSneaking = false;
-            client.player.sendMessage(new TranslatableText("text.soft_toggle_sneak.disable"), true);
+        if ( client.player != null ) {
+            if (isActivated) {
+                client.player.sendOverlayMessage(Component.translatable("text.soft_toggle_sneak.enable"));
+            } else {
+                ToggleSneakClient.isSneaking = false;
+                client.player.sendOverlayMessage(Component.translatable("text.soft_toggle_sneak.disable"));
+            }
         }
     }
 
@@ -96,17 +100,17 @@ public class ToggleSneakCustomConfig implements ToggleSneakConfig {
     }
 
     @Override
-    public boolean getUnseakInLava() {
+    public boolean getUnsneakInLava() {
         return unsneak_behaviour.unsneakInLava;
     }
 
     @Override
-    public boolean getUnseakInWater() {
+    public boolean getUnsneakInWater() {
         return unsneak_behaviour.unsneakInWater;
     }
 
     @Override
-    public boolean getUnseakWhenFlying() {
+    public boolean getUnsneakWhenFlying() {
         return unsneak_behaviour.unsneakWhenFlying;
     }
 
