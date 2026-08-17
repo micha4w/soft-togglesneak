@@ -18,11 +18,9 @@ Then run these in a terminal:
 ```shell
 git clone https://github.com/micha4w/soft-togglesneak
 cd soft-togglesneak
-python3 updater.py 1.20.1
+python3 updater.py 26.2
 ./gradlew build
 ./gradlew runClient # to test
 ```
 
 The new jars should appear in build/libs/.
-
-\* Note: this script only works for Minecraft versions <= 1.21.11
