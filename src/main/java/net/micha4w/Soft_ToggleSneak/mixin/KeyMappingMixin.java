@@ -19,7 +19,7 @@ public abstract class KeyMappingMixin implements IKeybinding {
     @Shadow
     public abstract boolean isDown();
 
-    public boolean isPressed (boolean actualValue) {
+    public boolean isDown (boolean actualValue) {
         if (actualValue) {
             return isDown;
         } else {
@@ -28,7 +28,7 @@ public abstract class KeyMappingMixin implements IKeybinding {
     }
 
     @Inject(at = @At("HEAD"), method = "isDown()Z", cancellable = true)
-    public void onIsPressed(CallbackInfoReturnable<Boolean> info) {
+    public void onIsDown(CallbackInfoReturnable<Boolean> info) {
         if ( ToggleSneakClient.isActivated() && (Object) this == Minecraft.getInstance().options.keyShift) {
             info.setReturnValue(ToggleSneakClient.isSneaking);
         }

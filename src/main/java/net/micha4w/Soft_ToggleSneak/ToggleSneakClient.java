@@ -72,14 +72,14 @@ public class ToggleSneakClient implements ClientModInitializer {
 
             if (client.player != null && client.level != null) {
 
-                boolean isPressed = ((IKeybinding) client.options.keyShift).isPressed(true);
+                boolean isDown = ((IKeybinding) client.options.keyShift).isDown(true);
 
                 if ( flyWhenClick && !client.player.getAbilities().flying ) flyWhenClick = false;
                 if ( inLavaWhenClick && !client.player.isInLava() ) inLavaWhenClick = false;
                 if ( inWaterWhenClick && !client.player.isInWater() ) inWaterWhenClick = false;
 
 
-                if ( !isPressed && (
+                if ( !isDown && (
                     ( config.getUnsneakInWater() && client.player.isInWater() && !inWaterWhenClick ) ||
                     ( config.getUnsneakInLava() && client.player.isInLava() && !inLavaWhenClick) ||
                     ( config.getUnsneakWhenFlying() && client.player.getAbilities().flying && !flyWhenClick ) )
@@ -87,7 +87,7 @@ public class ToggleSneakClient implements ClientModInitializer {
                     isSneaking = false;
                 }
 
-                if ( isPressed && !wasPressed ) {
+                if ( isDown && !wasPressed ) {
                     if ( isSneaking ) {
                         willUnsneak = true;
                     } else {
@@ -108,7 +108,7 @@ public class ToggleSneakClient implements ClientModInitializer {
                             clickTick = client.level.getGameTime();
                         }
                     }
-                } else if ( wasPressed && !isPressed ) {
+                } else if ( wasPressed && !isDown ) {
                     if (willUnsneak) {
                         isSneaking = false;
                         willUnsneak = false;
@@ -121,7 +121,7 @@ public class ToggleSneakClient implements ClientModInitializer {
                     }
                 }
 
-                wasPressed = isPressed;
+                wasPressed = isDown;
             }
         }
     }

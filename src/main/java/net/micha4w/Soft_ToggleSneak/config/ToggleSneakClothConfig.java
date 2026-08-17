@@ -9,7 +9,6 @@ import net.micha4w.Soft_ToggleSneak.iface.IToggleSneakConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 
-@SuppressWarnings("CanBeFinal")
 @Config(name = "soft_toggle_sneak")
 public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
     public boolean isActivated = true;
@@ -18,7 +17,6 @@ public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
 
     @ConfigEntry.Gui.CollapsibleObject
     UnsneakBehaviour unsneak_behaviour = new UnsneakBehaviour();
-    @SuppressWarnings("CanBeFinal")
     static class UnsneakBehaviour {
         boolean unsneakInLava = false;
         boolean unsneakInWater = true;
@@ -27,7 +25,6 @@ public class ToggleSneakClothConfig implements ConfigData, IToggleSneakConfig {
 
     @ConfigEntry.Gui.CollapsibleObject
     ToggleSneakBehaviour togglesneak_behaviour = new ToggleSneakBehaviour();
-    @SuppressWarnings("CanBeFinal")
     static class ToggleSneakBehaviour {
         boolean sneakWhenInLava = true;
         boolean sneakWhenInWater = false;
