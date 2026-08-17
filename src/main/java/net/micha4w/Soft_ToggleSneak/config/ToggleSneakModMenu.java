@@ -6,7 +6,8 @@ import net.micha4w.Soft_ToggleSneak.ToggleSneakClient;
 
 public class ToggleSneakModMenu implements ModMenuApi {
 
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+    @Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
         if ( ToggleSneakClient.config == null )
             ToggleSneakClient.innitConfig();
 
